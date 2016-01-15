@@ -1,4 +1,7 @@
 # TwitterRandomSampler
+Grabs a stream of tweets and displays them in the terminal.
+
+# Usage
 You will need to set up your API keys in an environment.rb file
 The file format will be:
 ```ruby
