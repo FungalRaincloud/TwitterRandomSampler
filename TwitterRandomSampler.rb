@@ -32,4 +32,3 @@ http.request request do |response|
 		end
 	end
 end
-
