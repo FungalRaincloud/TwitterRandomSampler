@@ -16,19 +16,19 @@ request.oauth! http, consumer_key, access_token
 body = ''
 puts "Spooling up the request. This might take a second."
 http.request request do |response|
-	response.read_body do |chunk|
-		body += chunk
-		num_bytes = body.split("\n").first.to_i
-		body = body.split("\n")[1..-1].join("\n")
-		json_blob = body.slice 0, num_bytes
-		if num_bytes > 0
-			parsed = JSON.parse(json_blob)
-			if parsed["text"] != nil
-				puts parsed["user"]["screen_name"]
-				puts parsed["text"]
-				puts parsed["created_at"]
-				sleep 1
-			end
-		end
-	end
+  response.read_body do |chunk|
+    body += chunk
+    num_bytes = body.split("\n").first.to_i
+    body = body.split("\n")[1..-1].join("\n")
+    json_blob = body.slice 0, num_bytes
+    if num_bytes > 0
+      parsed = JSON.parse(json_blob)
+      if parsed["text"] != nil
+        puts parsed["user"]["screen_name"]
+        puts parsed["text"]
+        puts parsed["created_at"]
+        sleep 1
+      end
+    end
+  end
 end
