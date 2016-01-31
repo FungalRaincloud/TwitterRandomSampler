@@ -7,7 +7,7 @@ require_relative 'environment'
 consumer_key = OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET)
 access_token = OAuth::Token.new(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 
-address = URI("https://stream.twitter.com/1.1/statuses/sample.json?delimited=length")
+address = URI("https://stream.twitter.com/1.1/statuses/sample.json?delimited=length&language=#{ARGV.empty? ? '' : ARGV[0]}")
 http = Net::HTTP.new address.host, address.port
 http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_PEER
@@ -24,7 +24,7 @@ http.request request do |response|
 		if num_bytes > 0
 			parsed = JSON.parse(json_blob)
 			if parsed["text"] != nil
-				puts parsed["screen_name"]
+				puts parsed["user"]["screen_name"]
 				puts parsed["text"]
 				puts parsed["created_at"]
 				sleep 1
