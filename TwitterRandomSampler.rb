@@ -11,11 +11,11 @@ QUIT_KEYS = 'qQ'
 def get_key
   begin
     system('stty raw -echo') 
-    char = (STDIN.read_nonblock(1).ord rescue 0) # 0 is the ASCII null character.
+    char = (STDIN.read_nonblock(1) rescue "\0") # '\0' is the ASCII null character.
   ensure
     system('stty -raw echo')
   end
-  return char.chr
+  return char
 end
 
 def respond_to_keypresses
