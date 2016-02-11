@@ -5,7 +5,7 @@ require 'json'
 require_relative 'environment'
 
 #TODO: ensure names meet convention, gemify?
-class Twitter_Connector
+class TwitterConnector
   def initialize stream_source: "sample.json", language: "en", filter: ""
     @consumer_key = OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET)
     @access_token = OAuth::Token.new(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
@@ -21,7 +21,7 @@ class Twitter_Connector
     body = ''
     retries = 5
     begin
-      puts "Spooling up the request. This might take a second.\n\n"
+      print "Spooling up the request. This might take a second.\n\n\r"
       @http.request request do |response|
         response.read_body do |chunk|
           body += chunk
@@ -33,14 +33,14 @@ class Twitter_Connector
             if parsed["text"] != nil
               # TODO: maybe use curses to make this a little cleaner/easier to read?
               #
-              puts "#{parsed["user"]["screen_name"]}\t\t#{parsed["created_at"]}\n#{parsed["text"]}\n\n\n"
+              print "#{parsed["user"]["screen_name"]}\t\t#{parsed["created_at"]}\n\r#{parsed["text"].gsub("\n", "\n\r")}\n\n\n\r"
               sleep 1
             end
           end
         end
       end
     rescue EOFError
-      puts "Stream Lost. Retries remaining: #{retries-=1}"
+      print "Stream Lost. Retries remaining: #{retries-=1}"
       sleep 5
       if !retries.zero?
         retry

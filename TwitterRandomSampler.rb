@@ -7,7 +7,7 @@ class TermTwitterClient
   HELP_KEYS = 'hH?'
   def initialize
     @paused = false
-    @tc = Twitter_Connector.new
+    @tc = TwitterConnector.new
     start
   end
   def start
@@ -36,11 +36,11 @@ class TermTwitterClient
   end
 
   def help
-    puts "\n'#{HELP_KEYS}' - display this help message"
-    puts "'#{ARG_KEYS}' - change twitter language/filter/stream type"
-    puts "'#{QUIT_KEYS}' - quit"
-    puts "'#{PAUSE_KEYS}' - pause"
-    puts "Press space to continue execution."
+    print "\n'#{HELP_KEYS}' - display this help message"
+    print "'#{ARG_KEYS}' - change twitter language/filter/stream type"
+    print "'#{QUIT_KEYS}' - quit"
+    print "'#{PAUSE_KEYS}' - pause"
+    print "Press space to continue execution."
     pause if !@paused
   end
 
@@ -54,10 +54,10 @@ class TermTwitterClient
     filter = gets.chomp
     print "language <en>:"
     language = gets.chomp
-    #TODO: make check for valid language by declaring a constant in Twitter_Connector?
+    #TODO: make check for valid language by declaring a constant in TwitterConnector?
     language = 'en' if language.empty?
-    puts "stream: #{stream}, filter: #{filter}, language: #{language}"
-    @tc = Twitter_Connector.new stream_source: stream, filter: filter, language: language
+    print "stream: #{stream}, filter: #{filter}, language: #{language}\n"
+    @tc = TwitterConnector.new stream_source: stream, filter: filter, language: language
     create_thread
   end
 
